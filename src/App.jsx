@@ -1,8 +1,8 @@
+import Container from './components/Container';
+
 function App() {
   return (
-    <div>
-      app
-    </div>
+    <Container />
   );
 }
 

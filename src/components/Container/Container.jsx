@@ -1,6 +1,5 @@
 import { useState } from 'react';
 
-// import Input from '../Input';
 import Button from '../Button';
 
 import './style.css';
@@ -20,50 +19,50 @@ function Container() {
   const [stack, setStack] = useState(null);
   const [operator, setOperator] = useState(null);
 
-  // const [inputValue, setInputValue] = useState('');
+  const parsedFloatCalculationValue = parseFloat(calculationValue);
 
   const performOperation = () => {
     if (operator !== null) {
       switch (operator) {
         case signEnum.plus:
-          setStack(stack + parseFloat(calculationValue));
+          setStack(stack + parsedFloatCalculationValue);
           break;
 
         case signEnum.minus:
-          setStack(stack - parseFloat(calculationValue));
+          setStack(stack - parsedFloatCalculationValue);
           break;
 
         case signEnum.multiply:
-          setStack(stack * parseFloat(calculationValue));
+          setStack(stack * parsedFloatCalculationValue);
           break;
 
         case signEnum.divide:
-          setStack(stack / parseFloat(calculationValue));
+          setStack(stack / parsedFloatCalculationValue);
           break;
 
         default:
       }
     } else {
-      setStack(parseFloat(calculationValue));
+      setStack(parsedFloatCalculationValue);
     }
   };
 
   const calculateValue = () => {
     switch (operator) {
       case signEnum.plus:
-        setCalculationValue((stack + parseFloat(calculationValue)).toString());
+        setCalculationValue((stack + parsedFloatCalculationValue).toString());
         break;
 
       case signEnum.minus:
-        setCalculationValue((stack - parseFloat(calculationValue)).toString());
+        setCalculationValue((stack - parsedFloatCalculationValue).toString());
         break;
 
       case signEnum.multiply:
-        setCalculationValue((stack * parseFloat(calculationValue)).toString());
+        setCalculationValue((stack * parsedFloatCalculationValue).toString());
         break;
 
       case signEnum.divide:
-        setCalculationValue((stack / parseFloat(calculationValue)).toString());
+        setCalculationValue((stack / parsedFloatCalculationValue).toString());
         break;
 
       default:
@@ -132,7 +131,7 @@ function Container() {
         if (calculationValue[calculationValue.length - 1] === signEnum.dot) {
           setCalculationValue(calculationValue + calctype);
         } else {
-          setCalculationValue(parseFloat(parseFloat(calculationValue) + calctype).toString());
+          setCalculationValue(parseFloat(parsedFloatCalculationValue + calctype).toString());
         }
       }
     }
@@ -144,17 +143,6 @@ function Container() {
         <div className="row">
           <div className="col-sm-12">
             <h2 className="float-right">{ calculationValue }</h2>
-            {/* <div className="input-group input-group-lg">
-              <Input
-                className="form-control"
-                type="text"
-                value={inputValue}
-                onChange={(event) => setInputValue(event.target.value)}
-                aria-label="Sizing example input"
-                aria-describedby="inputGroup-sizing-lg"
-                readOnly
-              />
-            </div> */}
           </div>
         </div>
 

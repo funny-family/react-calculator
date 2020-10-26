@@ -15,29 +15,39 @@ function Container() {
 
   const handleButtonEvent = (calctype) => () => {
     // console.log('calctype:', calctype);
-    if (calctype === 'AC') {
+    const sign = {
+      plus: '+',
+      minus: '-',
+      multiply: '*',
+      divide: '/',
+      equals: '=',
+      dot: '.',
+      clearAll: 'AC'
+    };
+
+    if (calctype === sign.clearAll) {
       setCalculationValue('0');
       setStack(null);
       setOperator(null);
       return;
     }
 
-    if (calctype === '.') {
-      if (calculationValue.includes('.')) return;
+    if (calctype === sign.dot) {
+      if (calculationValue.includes(sign.dot)) return;
 
       setCalculationValue(`${calculationValue}.`);
       return;
     }
 
-    if (calctype === '+') {
+    if (calctype === sign.plus) {
       if (operator !== null) {
-        if (operator === '+') {
+        if (operator === sign.plus) {
           setStack(stack + parseFloat(calculationValue));
-        } else if (operator === '-') {
+        } else if (operator === sign.minus) {
           setStack(stack - parseFloat(calculationValue));
-        } else if (operator === '*') {
+        } else if (operator === sign.multiply) {
           setStack(stack * parseFloat(calculationValue));
-        } else if (operator === '/') {
+        } else if (operator === sign.divide) {
           setStack(stack / parseFloat(calculationValue));
         }
       } else {
@@ -45,19 +55,19 @@ function Container() {
       }
 
       setCalculationValue('0');
-      setOperator('+');
+      setOperator(sign.plus);
       return;
     }
 
-    if (calctype === '-') {
+    if (calctype === sign.minus) {
       if (operator !== null) {
-        if (operator === '+') {
+        if (operator === sign.plus) {
           setStack(stack + parseFloat(calculationValue));
-        } else if (operator === '-') {
+        } else if (operator === sign.minus) {
           setStack(stack - parseFloat(calculationValue));
-        } else if (operator === '*') {
+        } else if (operator === sign.multiply) {
           setStack(stack * parseFloat(calculationValue));
-        } else if (operator === '/') {
+        } else if (operator === sign.divide) {
           setStack(stack / parseFloat(calculationValue));
         }
       } else {
@@ -65,38 +75,19 @@ function Container() {
       }
 
       setCalculationValue('0');
-      setOperator('-');
+      setOperator(sign.minus);
       return;
     }
 
-    // if (calctype === '−') {
-    //   if (operator !== null) {
-    //     if (operator === '+') {
-    //       setStack(stack + parseFloat(calculationValue));
-    //     } else if (operator === '−') {
-    //       setStack(stack - parseFloat(calculationValue));
-    //     } else if (operator === '*') {
-    //       setStack(stack * parseFloat(calculationValue));
-    //     } else if (operator === '/') {
-    //       setStack(stack / parseFloat(calculationValue));
-    //     }
-    //   } else {
-    //     setStack(parseFloat(calculationValue));
-    //   }
-    //   setCalculationValue('0');
-    //   setOperator('−');
-    //   return;
-    // }
-
-    if (calctype === '*') {
+    if (calctype === sign.multiply) {
       if (operator !== null) {
-        if (operator === '+') {
+        if (operator === sign.plus) {
           setStack(stack + parseFloat(calculationValue));
-        } else if (operator === '-') {
+        } else if (operator === sign.minus) {
           setStack(stack - parseFloat(calculationValue));
-        } else if (operator === '*') {
+        } else if (operator === sign.multiply) {
           setStack(stack * parseFloat(calculationValue));
-        } else if (operator === '/') {
+        } else if (operator === sign.divide) {
           setStack(stack / parseFloat(calculationValue));
         }
       } else {
@@ -104,19 +95,19 @@ function Container() {
       }
 
       setCalculationValue('0');
-      setOperator('*');
+      setOperator(sign.multiply);
       return;
     }
 
-    if (calctype === '/') {
+    if (calctype === sign.divide) {
       if (operator !== null) {
-        if (operator === '+') {
+        if (operator === sign.plus) {
           setStack(stack + parseFloat(calculationValue));
-        } else if (operator === '-') {
+        } else if (operator === sign.minus) {
           setStack(stack - parseFloat(calculationValue));
-        } else if (operator === '*') {
+        } else if (operator === sign.multiply) {
           setStack(stack * parseFloat(calculationValue));
-        } else if (operator === '/') {
+        } else if (operator === sign.divide) {
           setStack(stack / parseFloat(calculationValue));
         }
       } else {
@@ -124,30 +115,20 @@ function Container() {
       }
 
       setCalculationValue('0');
-      setOperator('/');
+      setOperator(sign.divide);
       return;
     }
 
-    if (calctype === '=') {
+    if (calctype === sign.equals) {
       if (!operator) return;
 
-      // console.log('calctype:', calctype);
-      // console.log('calc operation:', operator);
-
-      if (operator === '+') {
-        console.log('operator:', operator);
-        console.log('stack:', stack);
-        console.log('calculationValue:', parseFloat(calculationValue));
+      if (operator === sign.plus) {
         setCalculationValue((stack + parseFloat(calculationValue)).toString());
-      } else if (operator === '−') {
-        console.log('operator:', operator);
-        console.log('i am "-"'); // don't show in console!
-        console.log('stack:', stack);
-        console.log('calculationValue:', calculationValue);
+      } else if (operator === sign.minus) {
         setCalculationValue((stack - parseFloat(calculationValue)).toString());
-      } else if (operator === '*') {
+      } else if (operator === sign.multiply) {
         setCalculationValue((stack * parseFloat(calculationValue)).toString());
-      } else if (operator === '/') {
+      } else if (operator === sign.divide) {
         setCalculationValue((stack / parseFloat(calculationValue)).toString());
       }
 
@@ -156,10 +137,9 @@ function Container() {
       return;
     }
 
-    if (calculationValue[calculationValue.length - 1] === '.') {
+    if (calculationValue[calculationValue.length - 1] === sign.dot) {
       setCalculationValue(calculationValue + calctype);
     } else {
-      // const number = parseFloat(calculationValue);
       setCalculationValue(parseFloat(parseFloat(calculationValue) + calctype).toString());
     }
   };

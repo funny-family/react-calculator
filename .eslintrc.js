@@ -32,6 +32,7 @@ module.exports = {
       }
     ],
     'react/react-in-jsx-scope': 'off',
-    'react/prop-types': 'off'
+    'react/prop-types': 'off',
+    'no-console': 'off'
   }
 };

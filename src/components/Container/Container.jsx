@@ -5,6 +5,16 @@ import Button from '../Button';
 
 import './style.css';
 
+const signEnum = {
+  plus: '+',
+  minus: '-',
+  multiply: '*',
+  divide: '/',
+  equals: '=',
+  dot: '.',
+  clearAll: 'AC'
+};
+
 function Container() {
   const [calculationValue, setCalculationValue] = useState('0');
   const [stack, setStack] = useState(null);
@@ -12,22 +22,22 @@ function Container() {
 
   // const [inputValue, setInputValue] = useState('');
 
-  const performOperation = (sign) => {
+  const performOperation = () => {
     if (operator !== null) {
       switch (operator) {
-        case sign.plus:
+        case signEnum.plus:
           setStack(stack + parseFloat(calculationValue));
           break;
 
-        case sign.minus:
+        case signEnum.minus:
           setStack(stack - parseFloat(calculationValue));
           break;
 
-        case sign.multiply:
+        case signEnum.multiply:
           setStack(stack * parseFloat(calculationValue));
           break;
 
-        case sign.divide:
+        case signEnum.divide:
           setStack(stack / parseFloat(calculationValue));
           break;
 
@@ -38,21 +48,21 @@ function Container() {
     }
   };
 
-  const calculateValue = (sign) => {
+  const calculateValue = () => {
     switch (operator) {
-      case sign.plus:
+      case signEnum.plus:
         setCalculationValue((stack + parseFloat(calculationValue)).toString());
         break;
 
-      case sign.minus:
+      case signEnum.minus:
         setCalculationValue((stack - parseFloat(calculationValue)).toString());
         break;
 
-      case sign.multiply:
+      case signEnum.multiply:
         setCalculationValue((stack * parseFloat(calculationValue)).toString());
         break;
 
-      case sign.divide:
+      case signEnum.divide:
         setCalculationValue((stack / parseFloat(calculationValue)).toString());
         break;
 
@@ -61,132 +71,70 @@ function Container() {
   };
 
   const handleButtonEvent = (calctype) => () => {
-    // console.log('calctype:', calctype);
-    const signEnum = {
-      plus: '+',
-      minus: '-',
-      multiply: '*',
-      divide: '/',
-      equals: '=',
-      dot: '.',
-      clearAll: 'AC'
-    };
-
     switch (calctype) {
+      case signEnum.plus: {
+        performOperation();
+
+        setCalculationValue('0');
+        setOperator(signEnum.plus);
+        return;
+      }
+
       case signEnum.clearAll: {
         setCalculationValue('0');
         setStack(null);
         setOperator(null);
-        break;
+        return;
       }
 
-      case sign.dot: {
-        if (calculationValue.includes(sign.dot)) return;
+      case signEnum.dot: {
+        if (calculationValue.includes(signEnum.dot)) return;
 
         setCalculationValue(`${calculationValue}.`);
-        break;
+        return;
       }
 
-      case sign.plus:
-        performOperation(sign);
+      case signEnum.minus: {
+        performOperation();
 
         setCalculationValue('0');
-        setOperator(sign.plus);
-        break;
+        setOperator(signEnum.minus);
+        return;
+      }
 
-      case sign.minus:
-        performOperation(sign);
-
-        setCalculationValue('0');
-        setOperator(sign.minus);
-        break;
-
-      case sign.multiply:
-        performOperation(sign);
+      case signEnum.multiply: {
+        performOperation();
 
         setCalculationValue('0');
-        setOperator(sign.multiply);
-        break;
+        setOperator(signEnum.multiply);
+        return;
+      }
 
-      case sign.divide:
-        performOperation(sign);
+      case signEnum.divide: {
+        performOperation();
 
         setCalculationValue('0');
-        setOperator(sign.divide);
-        break;
+        setOperator(signEnum.divide);
+        return;
+      }
 
-      case sign.equals:
+      case signEnum.equals: {
         if (!operator) return;
 
-        calculateValue(sign);
+        calculateValue();
 
         setStack(null);
         setOperator(null);
-        break;
+        return;
+      }
 
-      default:
-    }
-
-    // if (calctype === sign.clearAll) {
-    //   setCalculationValue('0');
-    //   setStack(null);
-    //   setOperator(null);
-    //   return;
-    // }
-
-    // if (calctype === sign.dot) {
-    //   if (calculationValue.includes(sign.dot)) return;
-
-    //   setCalculationValue(`${calculationValue}.`);
-    //   return;
-    // }
-
-    // if (calctype === sign.plus) {
-    //   performOperation(sign);
-
-    //   setCalculationValue('0');
-    //   setOperator(sign.plus);
-    //   return;
-    // }
-
-    // if (calctype === sign.minus) {
-    //   performOperation(sign);
-
-    //   setCalculationValue('0');
-    //   setOperator(sign.minus);
-    //   return;
-    // }
-
-    // if (calctype === sign.multiply) {
-    //   performOperation(sign);
-
-    //   setCalculationValue('0');
-    //   setOperator(sign.multiply);
-    //   return;
-    // }
-
-    // if (calctype === sign.divide) {
-    //   performOperation(sign);
-
-    //   setCalculationValue('0');
-    //   setOperator(sign.divide);
-    //   return;
-    // }
-
-    // if (calctype === sign.equals) {
-    //   if (!operator) return;
-
-    //   calculateValue(sign);
-
-    //   setStack(null);
-    //   setOperator(null);
-    //   return;
-    // }
-
-    if (calculationValue[calculationValue.length - 1] === sign.dot) {
-      setCalculationValue(calculationValue + calctype);
-    } else {
-      setCalculationValue(parseFloat(parseFloat(calculationValue) + calctype).toString());
+      default: {
+        if (calculationValue[calculationValue.length - 1] === signEnum.dot) {
+          setCalculationValue(calculationValue + calctype);
+        } else {
+          setCalculationValue(parseFloat(parseFloat(calculationValue) + calctype).toString());
+        }
+      }
     }
   };
 
